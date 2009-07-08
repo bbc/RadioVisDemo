@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<radiodns_services>
+    <service>
+        <name>RadioVIS</name>
+        <record>_radiovis._tcp</record>
+    </service>
+
+    <service>
+        <name>RadioEPG</name>
+        <record>_radioepg._tcp</record>
+    </service>
+
+    <service>
+        <name>RadioTAG</name>
+        <record>_radiotag._tcp</record>
+    </service>
+</radiodns_services>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<radio_stations>
+    <radio_station>
+        <name>BBC Radio 1</name>
+        <broadcast_protocol>fm</broadcast_protocol>
+        <ecc>e1</ecc>
+        <pi>c201</pi>
+        <freq>09880</freq>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 1</name>
+        <broadcast_protocol>fm</broadcast_protocol>
+        <country>uk</country>
+        <pi>c201</pi>
+        <freq>09880</freq>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 2</name>
+        <broadcast_protocol>fm</broadcast_protocol>
+        <ecc>e1</ecc>
+        <pi>c202</pi>
+        <freq>08880</freq>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 2</name>
+        <broadcast_protocol>fm</broadcast_protocol>
+        <country>uk</country>
+        <pi>c202</pi>
+        <freq>08880</freq>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 3</name>
+        <broadcast_protocol>fm</broadcast_protocol>
+        <ecc>e1</ecc>
+        <pi>c203</pi>
+        <freq>09100</freq>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 3</name>
+        <broadcast_protocol>fm</broadcast_protocol>
+        <country>uk</country>
+        <pi>c203</pi>
+        <freq>09100</freq>
+    </radio_station>
+    
+    <radio_station>
+        <name>BBC Radio 4</name>
+        <broadcast_protocol>fm</broadcast_protocol>
+        <ecc>e1</ecc>
+        <pi>c204</pi>
+        <freq>09320</freq>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 4</name>
+        <broadcast_protocol>fm</broadcast_protocol>
+        <country>uk</country>
+        <pi>c204</pi>
+        <freq>09320</freq>
+    </radio_station>
+
+    <radio_station>
+        <name>Capital FM</name>
+        <broadcast_protocol>fm</broadcast_protocol>
+        <ecc>e1</ecc>
+        <pi>c586</pi>
+        <freq>09580</freq>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 1</name>
+        <broadcast_protocol>dab</broadcast_protocol>
+        <ecc>ce1</ecc>
+        <eid>ce15</eid>
+        <sid>c221</sid>
+        <scids>0</scids>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 1Xtra</name>
+        <broadcast_protocol>dab</broadcast_protocol>
+        <ecc>ce1</ecc>
+        <eid>ce15</eid>
+        <sid>c22a</sid>
+        <scids>0</scids>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 2</name>
+        <broadcast_protocol>dab</broadcast_protocol>
+        <ecc>ce1</ecc>
+        <eid>ce15</eid>
+        <sid>c222</sid>
+        <scids>0</scids>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 3</name>
+        <broadcast_protocol>dab</broadcast_protocol>
+        <ecc>ce1</ecc>
+        <eid>ce15</eid>
+        <sid>c223</sid>
+        <scids>0</scids>
+    </radio_station>
+    
+    <radio_station>
+        <name>BBC Radio 4</name>
+        <broadcast_protocol>dab</broadcast_protocol>
+        <ecc>ce1</ecc>
+        <eid>ce15</eid>
+        <sid>c224</sid>
+        <scids>0</scids>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 5 Live</name>
+        <broadcast_protocol>dab</broadcast_protocol>
+        <ecc>ce1</ecc>
+        <eid>ce15</eid>
+        <sid>c225</sid>
+        <scids>0</scids>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 5 Live Sports Extra</name>
+        <broadcast_protocol>dab</broadcast_protocol>
+        <ecc>ce1</ecc>
+        <eid>ce15</eid>
+        <sid>c228</sid>
+        <scids>0</scids>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 6 Music</name>
+        <broadcast_protocol>dab</broadcast_protocol>
+        <ecc>ce1</ecc>
+        <eid>ce15</eid>
+        <sid>c22b</sid>
+        <scids>0</scids>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Radio 7</name>
+        <broadcast_protocol>dab</broadcast_protocol>
+        <ecc>ce1</ecc>
+        <eid>ce15</eid>
+        <sid>c22c</sid>
+        <scids>0</scids>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC Asian Network</name>
+        <broadcast_protocol>dab</broadcast_protocol>
+        <ecc>ce1</ecc>
+        <eid>ce15</eid>
+        <sid>c236</sid>
+        <scids>0</scids>
+    </radio_station>
+
+    <radio_station>
+        <name>BBC World Service</name>
+        <broadcast_protocol>dab</broadcast_protocol>
+        <ecc>ce1</ecc>
+        <eid>ce15</eid>
+        <sid>c238</sid>
+        <scids>0</scids>
+    </radio_station>
+</radio_stations>

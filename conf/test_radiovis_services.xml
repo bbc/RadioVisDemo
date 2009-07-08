@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<test_radiovis_services>
+    <test_radiovis_service>
+        <name>Local Stomp Server</name>
+        <hostname>localhost</hostname>
+        <port>61613</port>
+        <text_topic>/topic/test/text</text_topic>
+        <image_topic>/topic/test/image</image_topic>
+    </test_radiovis_service>
+</test_radiovis_services>
