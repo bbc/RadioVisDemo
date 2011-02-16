@@ -87,9 +87,9 @@ directory:
 
  * radiodns_domains.xml contains a list of domains against which DNS lookups
    for radio stations can be performed. By default, this list includes
-   radiodns.org and example.com, but you can modify this list to refer to your
-   own domain in order to test your own RadioDNS services before making them
-   available via radiodns.org.
+   radiodns.org and prototype0.net (which is a BBC development server),
+   but you can modify this list to refer to your own domain in order to test
+   your own RadioDNS services before making them available via radiodns.org.
   
  * radio_stations.xml contains a list of radio stations and their associated
    broadcast parameters, which are shown in the Hostname field. Please read
