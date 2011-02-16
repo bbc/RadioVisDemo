@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2009-2011 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -21,6 +21,6 @@ from fm_radio_station import FmRadioStation
 def test_FmRadioStation():
     p = FmRadioStation(name = 'FM Station', ecc = 'e1', pi = 'c586', freq = 9580)
     assert p.get_hostname() == '09580.c586.ce1.fm.radiodns.org'
-    assert p.get_text_topic() == '/topic/fm/ce1/c586/95.8/text'
-    assert p.get_image_topic() == '/topic/fm/ce1/c586/95.8/image'
+    assert p.get_text_topic() == '/topic/fm/ce1/c586/09580/text'
+    assert p.get_image_topic() == '/topic/fm/ce1/c586/09580/image'
     assert p.get_name() == 'FM Station'

@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2009-2011 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -21,9 +21,9 @@ class RadioVisClient(stomp.ConnectionListener):
                  host = 'localhost',
                  port = 61613,
                  proxy_settings = None,
-                 user = '',
-                 passcode = ''):
-                 
+                 user = None,
+                 passcode = None):
+
         stomp.ConnectionListener.__init__(self)
         
         if proxy_settings is not None:
@@ -49,16 +49,13 @@ class RadioVisClient(stomp.ConnectionListener):
                                       ^TEXT   # "TEXT" at start of line
                                       \s+     # some whitespace
                                       (.*)    # the text message
-                                      """,  
-                                      re.VERBOSE | re.IGNORECASE)        
+                                      """,
+                                      re.VERBOSE | re.IGNORECASE)
 
         self._show_regex = re.compile(r"""
-                                      ^SHOW           # "SHOW" at start of line
-                                      \s+             # some whitespace
-                                      ([^,\s]*)       # image URL (anything excluding whitespace and commas)
-                                      (?:,([^\s]*?))? # optional, a comma, then a hyperlink (no spaces)
-                                      (?:\s+(.*))?    # optional, whitespace, then an ISO8601 date/time
-                                      $
+                                      ^SHOW   # "SHOW" at start of line
+                                      \s+     # some whitespace
+                                      (.*)    # the URL of the image to show
                                       """,
                                       re.VERBOSE | re.IGNORECASE)
 
@@ -125,11 +122,19 @@ class RadioVisClient(stomp.ConnectionListener):
                 match = self._show_regex.match(line)
 
                 if match:
-                    url       = match.group(1)
-                    link      = match.group(2)
-                    date_time = match.group(3)
-                    # TODO: Parse date_time and construct a datetime object.
-
+                    url = match.group(1)
+                    
+                    if 'link' in headers:
+                        link = headers['link']
+                    else:
+                        link = None
+                    
+                    if 'trigger-time' in headers:
+                        # TODO: Parse date_time and construct a datetime object.
+                        date_time = headers['trigger-time']
+                    else:
+                        date_time = None
+                    
                     self.notify_show(url, link, date_time)
                 else:
                     pass
@@ -148,29 +153,6 @@ class RadioVisClient(stomp.ConnectionListener):
             self._connection.disconnect()
         except stomp.NotConnectedException:
             pass # ignore if no longer connected
-
-    def send_text(self, topic, text):
-        """
-        Send a TEXT RadioVIS message.
-        """
-        message = "TEXT " + text
-
-        self._connection.send(destination = topic, message = message)
-
-    def send_show(self, topic, image_url, link_url = None, date_time = None):
-        """
-        Send a SHOW RadioVIS message.
-        """
-        message = "SHOW " + image_url
-        if link_url is not None:
-            message += "," + link_url
-
-        if date_time is None:
-            message += " NOW"
-        else:
-            message += date_time
-
-        self._connection.send(destination = topic, message = message)
 
     def notify(self, message, headers = None, body = ''):
         for listener in self._listeners:
@@ -196,3 +178,29 @@ class RadioVisClient(stomp.ConnectionListener):
         """
         for listener in self._listeners:
             listener.radiovis_show(url, link, date_time)
+
+    def send_text_message(self, topic, text):
+        """
+        Send a TEXT RadioVIS message.
+        """
+        message = "TEXT " + text
+
+        self._connection.send(destination = topic, message = message)
+
+    def send_show_message(self, topic, image_url, link_url = None, date_time = None):
+        """
+        Send a SHOW RadioVIS message.
+        """
+        message = "SHOW " + image_url
+        
+        headers = {}
+
+        if link_url is not None:
+            headers['link'] = link_url
+
+        if date_time is None:
+            headers['trigger-time'] = 'NOW'
+        else:
+            headers['trigger-time'] = date_time
+
+        self._connection.send(destination = topic, message = message, headers = headers)

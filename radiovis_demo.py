@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2009-2011 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -26,6 +26,7 @@ import wx
 from lib.main_frame import MainFrame
 from lib.connection_manager import ConnectionManager
 from lib.radio_station_list import RadioStationList
+from lib.radiodns_domain import RadioDnsDomainList
 from lib.radiodns_service import RadioDnsServiceList
 from lib.test_radiovis_service import TestRadioVisServiceList
 
@@ -51,6 +52,9 @@ class RadioVisDemoApp(wx.App):
         radio_stations = RadioStationList(
             self._get_config_pathname("radio_stations.xml"))
 
+        radiodns_domains = RadioDnsDomainList(
+            self._get_config_pathname("radiodns_domains.xml"))
+
         radiodns_services = RadioDnsServiceList(
             self._get_config_pathname("radiodns_services.xml"))
 
@@ -65,6 +69,7 @@ class RadioVisDemoApp(wx.App):
         frame.Show()
 
         frame.set_radio_stations(radio_stations)
+        frame.set_radiodns_domains(radiodns_domains)
         frame.set_test_radiovis_services(test_radiovis_services)
 
         connection_manager = ConnectionManager(radiodns_services)

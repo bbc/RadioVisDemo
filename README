@@ -1,17 +1,18 @@
-RadioVIS Demo Application v0.1
+RadioVIS Demo Application v1.0
 ==============================
 
 Introduction
 ------------
 
-RadioVISDemo is a demonstration application for RadioDNS and RadioVIS.
-RadioVIS is the visualisation protocol that forms part of RadioDNS
-(http://radiodns.org). The software follows the v0.6 RadioDNS specifications,
-which are currently under development, so there is no guarantee that
-RadioDNS services will be available or compatible with this software.
+RadioVISDemo is a demonstration application for RadioDNS and RadioVIS. RadioVIS
+is the visualisation protocol that forms part of the RadioDNS suite of
+application protocols. The software follows RadioDNS Technical Specification
+v0.6 and RadioVIS Technical Specification V1.0.0.
 
-Please visit http://open.bbc.co.uk/rad/projects/radiodns to obtain the latest
-release of this software.
+Please visit http://radiodns.org for more information about RadioDNS.
+
+Please visit http://open.bbc.co.uk/rad/projects/radiodns to obtain the
+latest release of this software.
 
 Installation
 ------------
@@ -21,9 +22,7 @@ installed:
 
 * Python v2.5
 * wxPython v2.8 from http://www.wxpython.org
-* ObjectListView v1.2 from http://objectlistview.sourceforge.net/python
 * dnspython v1.6.0 from http://www.dnspython.org
-* SocksiPy v1.00 from http://socksipy.sourceforge.net
 * setuptools v0.6c9 from http://pypi.python.org/pypi/setuptools
 * nose v0.10.4 from http://somethingaboutorange.com/mrl/projects/nose/
 
@@ -41,6 +40,10 @@ Running RadioVISDemo
 To run the application, enter the following at a command prompt:
 
     python radiovis_demo.py
+
+The default setting in the Domain field is "radiodns.org". Change this option
+to perform radio station DNS lookups against a different domain, which is useful
+for testing RadioDNS services during development.
 
 Select a RadioDNS hostname in the Hostname field. The Local Stomp Server entry
 allows testing of a RadioVIS service running on the local machine (localhost,
@@ -82,6 +85,12 @@ Configuration
 The RadioVIS demo application uses three configuration files, in the conf
 directory:
 
+ * radiodns_domains.xml contains a list of domains against which DNS lookups
+   for radio stations can be performed. By default, this list includes
+   radiodns.org and example.com, but you can modify this list to refer to your
+   own domain in order to test your own RadioDNS services before making them
+   available via radiodns.org.
+  
  * radio_stations.xml contains a list of radio stations and their associated
    broadcast parameters, which are shown in the Hostname field. Please read
    the RadioDNS documentation at http://radiodns.org/ for details of the
@@ -131,7 +140,7 @@ http://radiodns.org/
 
 Contact and Legal Information
 -----------------------------
-Copyright 2009 British Broadcasting Corporation
+Copyright 2009-2011 British Broadcasting Corporation
 
 The RadioVIS Demo Application is free software; you can redistribute it and/or
 modify it under the terms of the Apache License, Version 2.0.

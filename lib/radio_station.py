@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2009-2011 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -25,6 +25,7 @@ class RadioStation(object):
         """
         self._tx_system = tx_system
         self._name = name
+        self._domain = "radiodns.org"
 
     def get_name(self):
         """
@@ -32,12 +33,15 @@ class RadioStation(object):
         """
         return self._name
 
+    def set_domain(self, domain):
+        self._domain = domain
+
     def get_hostname(self):
         """
         Return the fully-qualified domain name (FQDN) for the radio station.
         """
         query = self._get_query()
-        query.extend([self._tx_system, "radiodns", "org"])
+        query.extend([self._tx_system, self._domain])
         return ".".join(query)
 
     def get_text_topic(self):

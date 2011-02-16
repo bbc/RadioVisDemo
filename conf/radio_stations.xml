@@ -12,7 +12,7 @@
     <radio_station>
         <name>BBC Radio 1</name>
         <broadcast_protocol>fm</broadcast_protocol>
-        <country>uk</country>
+        <country>gb</country>
         <pi>c201</pi>
         <freq>09880</freq>
     </radio_station>
@@ -28,7 +28,7 @@
     <radio_station>
         <name>BBC Radio 2</name>
         <broadcast_protocol>fm</broadcast_protocol>
-        <country>uk</country>
+        <country>gb</country>
         <pi>c202</pi>
         <freq>08880</freq>
     </radio_station>
@@ -44,7 +44,7 @@
     <radio_station>
         <name>BBC Radio 3</name>
         <broadcast_protocol>fm</broadcast_protocol>
-        <country>uk</country>
+        <country>gb</country>
         <pi>c203</pi>
         <freq>09100</freq>
     </radio_station>
@@ -60,7 +60,7 @@
     <radio_station>
         <name>BBC Radio 4</name>
         <broadcast_protocol>fm</broadcast_protocol>
-        <country>uk</country>
+        <country>gb</country>
         <pi>c204</pi>
         <freq>09320</freq>
     </radio_station>

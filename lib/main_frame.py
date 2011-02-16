@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2009-2011 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -16,7 +16,6 @@ import logging
 import threading
 import wx
 
-from ObjectListView import ObjectListView, ColumnDefn
 import StringIO
 
 from dns_resolver import ServiceRecord
@@ -196,6 +195,7 @@ class MainFrame(wx.Frame):
         wx.Frame.__init__(self, parent, id, title, pos, size, style)
 
         self._connection_manager = None
+        self._services = []
 
         self._init_logging()
 
@@ -211,6 +211,7 @@ class MainFrame(wx.Frame):
         column2_sizer = wx.FlexGridSizer(cols = 2, hgap = 10, vgap = 5)
         column2_sizer.AddGrowableCol(1)
 
+        self._init_domain_controls(panel, column1_sizer)
         self._init_hostname_controls(panel, column1_sizer)
         self._init_cname_controls(panel, column1_sizer)
         self._init_services_controls(panel, column1_sizer)
@@ -244,6 +245,21 @@ class MainFrame(wx.Frame):
         self.Fit()
 
         self._init_message_handlers()
+
+    def _init_domain_controls(self, parent, sizer):
+        self._domain_static = wx.StaticText(parent = parent,
+                                              id = wx.ID_ANY,
+                                              label = "Domain")
+
+        self._domain_combobox = wx.ComboBox(parent = parent,
+                                            size = (self._default_width, -1),
+                                            style = wx.CB_READONLY)
+
+        sizer.Add(item = self._domain_static)
+        sizer.Add(item = self._domain_combobox, flag = wx.EXPAND)
+
+        self._domain_combobox.Append("radiodns.org")
+        self._domain_combobox.SetSelection(0)
 
     def _init_hostname_controls(self, parent, sizer):
         self._hostname_static = wx.StaticText(parent = parent,
@@ -284,22 +300,18 @@ class MainFrame(wx.Frame):
                                               id = wx.ID_ANY,
                                               label = "Services")
 
-        self._services_listview = ObjectListView(parent,
-                                                 wx.ID_ANY,
-                                                 style = wx.LC_REPORT | wx.SUNKEN_BORDER,
-                                                 sortable = False,
-                                                 useAlternateBackColors = False)
-
-        self._services_listview.SetColumns([
-            ColumnDefn("Name",     "left", 70,  "name"),
-            ColumnDefn("Port",     "left", 50,  "port"),
-            ColumnDefn("Priority", "left", 50,  "priority"),
-            ColumnDefn("Weight",   "left", 50,  "weight"),
-            ColumnDefn("Target",   "left", 140, "target", isSpaceFilling = True),
-        ])
+        self._services_listctrl = wx.ListCtrl(parent,
+                                              wx.ID_ANY,
+                                              style = wx.LC_REPORT | wx.SUNKEN_BORDER)
+                                              
+        self._services_listctrl.InsertColumn(0, "Name", wx.LIST_FORMAT_LEFT, 70)                                              
+        self._services_listctrl.InsertColumn(1, "Port", wx.LIST_FORMAT_LEFT, 50)                                              
+        self._services_listctrl.InsertColumn(2, "Priority", wx.LIST_FORMAT_LEFT, 50)                                              
+        self._services_listctrl.InsertColumn(3, "Weight", wx.LIST_FORMAT_LEFT, 50)                                              
+        self._services_listctrl.InsertColumn(4, "Target", wx.LIST_FORMAT_LEFT, 140)                                              
 
         sizer.Add(item = self._services_static)
-        sizer.Add(item = self._services_listview, flag = wx.EXPAND)
+        sizer.Add(item = self._services_listctrl, flag = wx.EXPAND)
 
     def _init_log_controls(self, parent, sizer):
         self._log_static = wx.StaticText(parent = parent,
@@ -442,6 +454,7 @@ class MainFrame(wx.Frame):
         self.Bind(EVT_RADIOVIS_SHOW, self.OnRadioVisShow)
         self.Bind(EVT_RECEIVED_IMAGE, self.OnReceivedImage)
         self.Bind(wx.EVT_CLOSE, self.OnClose)
+        self._domain_combobox.Bind(wx.EVT_COMBOBOX, self.OnDomainComboBoxSelChanged)
 
     def _set_current_row_growable(self, sizer):
         """
@@ -451,6 +464,8 @@ class MainFrame(wx.Frame):
         sizer.AddGrowableRow(rows - 1)
 
     def set_radio_stations(self, radio_stations):
+        self._radio_stations = radio_stations
+
         for station in radio_stations:
             item = RadioStationAdapter(station)
             self._hostname_combobox.Append(item.get_display_name(), item)
@@ -458,6 +473,17 @@ class MainFrame(wx.Frame):
         if self._hostname_combobox.GetCount() > 0:
             self._hostname_combobox.SetSelection(0)
     
+    def set_radiodns_domains(self, radiodns_domains):
+        self._domain_combobox.Clear()
+
+        for domain in radiodns_domains:
+          self._domain_combobox.Append(domain)
+
+        if self._domain_combobox.GetCount() > 0:
+            self._domain_combobox.SetSelection(0)
+        
+        self._update_hostnames()
+
     def set_test_radiovis_services(self, test_radiovis_services):
         for test_radiovis_service in test_radiovis_services:
             item = TestRadioVisServiceAdapter(test_radiovis_service)
@@ -475,12 +501,12 @@ class MainFrame(wx.Frame):
         Event handler for the "Resolve" button.
         """
         self._cname_text.SetValue("")
-        self._services_listview.SetObjects([])
+        self._services_listctrl.DeleteAllItems()
 
         index = self._hostname_combobox.GetSelection()
         item = self._hostname_combobox.GetClientData(index)
 
-        cname, services = item.resolve(self._connection_manager)
+        cname, self._services = item.resolve(self._connection_manager)
 
         if cname is not None:
             self._cname_text.SetValue(cname)
@@ -489,9 +515,33 @@ class MainFrame(wx.Frame):
         else:
             self._append_log("Unknown hostname: " + item.get_hostname())
 
-        if services is not None and len(services) > 0:
-            self._services_listview.SetObjects(services)
-            self._services_listview.SelectObject(services[0])
+        for i in range(len(self._services)):
+            service = self._services[i]
+            idx = self._services_listctrl.InsertStringItem(0, service.name)
+            self._services_listctrl.SetStringItem(idx, 1, str(service.port))
+            self._services_listctrl.SetStringItem(idx, 2, str(service.priority))
+            self._services_listctrl.SetStringItem(idx, 3, str(service.weight))
+            self._services_listctrl.SetStringItem(idx, 4, service.target)
+            self._services_listctrl.SetItemData(idx, i)
+
+        self._services_listctrl.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+
+    def OnDomainComboBoxSelChanged(self, event):
+        self._update_hostnames()
+
+    def _update_hostnames(self):
+        sel = self._hostname_combobox.GetSelection()
+        self._hostname_combobox.Clear()
+
+        domain = self._domain_combobox.GetValue()
+
+        for station in self._radio_stations:
+            station.set_domain(domain)
+            item = RadioStationAdapter(station)
+            self._hostname_combobox.Append(item.get_display_name(), item)
+
+        if sel != wx.NOT_FOUND:
+            self._hostname_combobox.SetSelection(sel)
 
     def OnCloseButton(self, event):
         """
@@ -503,11 +553,17 @@ class MainFrame(wx.Frame):
         """
         Event handler for the "Connect" button.
         """
-        host_index  = self._hostname_combobox.GetSelection()
+        host_index = self._hostname_combobox.GetSelection()
         item = self._hostname_combobox.GetClientData(host_index)
         station = item.get_station()
 
-        service     = self._services_listview.GetSelectedObject()
+        selected_item = self._services_listctrl.GetFirstSelected();
+        service = None
+
+        if selected_item != -1:
+            index = self._services_listctrl.GetItemData(selected_item)
+            service = self._services[index]
+
         proxy_http  = self._proxy_http_button.IsChecked()
         proxy_stomp = self._proxy_stomp_button.IsChecked()
 
@@ -530,7 +586,10 @@ class MainFrame(wx.Frame):
             else:
                 self._message_box("Please select a RadioVIS service to connect to")
         else:
-            self._message_box("Please select an entry in the Services list")
+            if len(self._services) > 0:
+                self._message_box("Please select an entry in the Services list")
+            else:
+                self._message_box("This radio station has no services available")
 
     def OnClose(self, event):
         """

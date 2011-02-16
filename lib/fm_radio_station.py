@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2009-2011 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -70,21 +70,3 @@ class FmRadioStation(RadioStation):
 
     def _get_query(self):
         return [self._freq, self._pi, self._country]
-
-    def _get_topic(self):
-        """
-        Overrides _get_topic in RadioStation class. In RadioDNS, the
-        frequency is be a 5-digit integer, but in the RadioVIS topic names,
-        the frequency is a number with 1 decimal place.
-        """
-
-        # Translate 5-digit frequency, e.g., 09580 -> 95.8
-        freq = self._freq[0:3] + '.' + self._freq[3:4]
-
-        if freq[0] == '0':
-            freq = freq[1:]
-
-        query = [freq, self._pi, self._country, self._tx_system]
-        query.reverse()
-
-        return "/topic/" + "/".join(query)

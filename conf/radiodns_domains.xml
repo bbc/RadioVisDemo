@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<radiodns_domains>
+    <radiodns_domain>radiodns.org</radiodns_domain>
+    <radiodns_domain>example.com</radiodns_domain>
+</radiodns_domains>
