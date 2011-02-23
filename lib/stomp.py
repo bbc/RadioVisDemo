@@ -389,6 +389,9 @@ class Connection(object):
         if self.is_connected():
             self.disconnect()
 
+        # Stop the worker thread, which closes the socket
+        self.__running = False
+
         self.__receiver_thread_exit_condition.acquire()
         if not self.__receiver_thread_exited:
             self.__receiver_thread_exit_condition.wait()
@@ -461,12 +464,6 @@ class Connection(object):
         
     def disconnect(self, headers=None, **keyword_headers):
         self.__send_frame_helper('DISCONNECT', '', self.__merge_headers([self.__connect_headers, headers, keyword_headers]), [ ])
-        self.__running = False
-        if self.__socket:
-            if hasattr(socket, 'SHUT_RDWR'):
-                self.__socket.shutdown(socket.SHUT_RDWR)
-            self.__socket.close()
-        self.__current_host_and_port = None
 
     # ========= PRIVATE MEMBERS =========
 
