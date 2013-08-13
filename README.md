@@ -159,7 +159,7 @@ and the [RadioDNS website](http://radiodns.org/).
 
 ## Authors
 
-This software was written by Chris Needham - chris.needham at bbc.co.uk.
+This software was written by [Chris Needham](https://github.com/chrisn) - chris.needham at bbc.co.uk.
 
 ## Contact and Legal Information
 
