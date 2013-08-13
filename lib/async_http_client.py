@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2009, 2013 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -39,6 +39,10 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
             url_components = urlparse.urlparse(url)
             self._request_host = url_components.hostname
             self._request_path = url_components.path
+            self._request_port = url_components.port
+
+            if self._request_port is None:
+                self._request_port = 80
         else:
             self._request_host = None
             self._request_path = url
@@ -54,7 +58,7 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
             self.log("Using proxy %s port %d" % (host, port))
             host_and_port = (host, port)
         else:
-            host_and_port = (self._request_host, 80)
+            host_and_port = (self._request_host, self._request_port)
 
         try:
             self.connect(host_and_port)
@@ -69,7 +73,12 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
         request = "GET %s HTTP/1.0\r\n" % self._request_path
 
         if self._request_host is not None:
-            request += "Host: %s\r\n" % self._request_host
+            request += "Host: %s" % self._request_host
+
+            if self._request_port != 80:
+                request += ":%d" % self._request_port
+
+            request += "\r\n"
 
         request += "\r\n"
 
@@ -130,7 +139,7 @@ class HttpClientThread(threading.Thread):
     def run(self):
         while True:
             if self._http_client is not None:
-                # Currently downloading a url, 
+                # Currently downloading a url,
                 self._http_client.poll()
 
                 # Check the queue to see if any urls have been posted
@@ -161,7 +170,7 @@ class HttpClientThread(threading.Thread):
         # to exit.
         self.request(None)
         self.join()
-    
+
     def _request_url(self, url, proxy_settings):
         self._http_client = AsyncHttpClient(self)
         success = self._http_client.request(url, proxy_settings)
