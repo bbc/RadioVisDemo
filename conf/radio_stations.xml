@@ -146,7 +146,7 @@
     </radio_station>
 
     <radio_station>
-        <name>BBC Radio 7</name>
+        <name>BBC Radio 4 Extra</name>
         <broadcast_protocol>dab</broadcast_protocol>
         <ecc>ce1</ecc>
         <eid>ce15</eid>
