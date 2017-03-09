@@ -69,7 +69,7 @@
         <name>Capital FM</name>
         <broadcast_protocol>fm</broadcast_protocol>
         <ecc>e1</ecc>
-        <pi>c586</pi>
+        <pi>c479</pi>
         <freq>09580</freq>
     </radio_station>
 
