@@ -1,4 +1,4 @@
-# Copyright 2009-2011 British Broadcasting Corporation
+# Copyright 2009-2017 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -24,7 +24,7 @@ from dns_resolver import ServiceRecord
 class RadioStationAdapter:
     def __init__(self, station):
         self._station = station
-    
+
     def get_display_name(self):
         name     = self._station.get_name()
         hostname = self._station.get_hostname()
@@ -38,12 +38,12 @@ class RadioStationAdapter:
     def resolve(self, connection_manager):
         cname = connection_manager.get_cname(self._station)
         services = []
-        
+
         if cname is not None:
             services = connection_manager.get_services(cname)
 
         return (cname, services)
-    
+
     def get_station(self):
         return self._station
 
@@ -51,7 +51,7 @@ class RadioStationAdapter:
 class TestRadioVisServiceAdapter:
     def __init__(self, test_radiovis_service):
         self._test_radiovis_service = test_radiovis_service
-        
+
     def get_display_name(self):
         name     = self._test_radiovis_service.get_name()
         hostname = self._test_radiovis_service.get_hostname()
@@ -66,7 +66,7 @@ class TestRadioVisServiceAdapter:
     def resolve(self, connection_manager):
         cname = self._test_radiovis_service.get_hostname()
         port  = self._test_radiovis_service.get_port()
-        
+
         service = ServiceRecord(name   = "RadioVIS",
                                 target = cname,
                                 port   = port)
@@ -86,7 +86,7 @@ class LogHandler(logging.Handler):
         logging.Handler.__init__(self)
 
         self._dest = dest
-        
+
         formatter = logging.Formatter("%(message)s")
         self.setFormatter(formatter)
 
@@ -303,12 +303,12 @@ class MainFrame(wx.Frame):
         self._services_listctrl = wx.ListCtrl(parent,
                                               wx.ID_ANY,
                                               style = wx.LC_REPORT | wx.SUNKEN_BORDER)
-                                              
-        self._services_listctrl.InsertColumn(0, "Name", wx.LIST_FORMAT_LEFT, 70)                                              
-        self._services_listctrl.InsertColumn(1, "Port", wx.LIST_FORMAT_LEFT, 50)                                              
-        self._services_listctrl.InsertColumn(2, "Priority", wx.LIST_FORMAT_LEFT, 50)                                              
-        self._services_listctrl.InsertColumn(3, "Weight", wx.LIST_FORMAT_LEFT, 50)                                              
-        self._services_listctrl.InsertColumn(4, "Target", wx.LIST_FORMAT_LEFT, 140)                                              
+
+        self._services_listctrl.InsertColumn(0, "Name", wx.LIST_FORMAT_LEFT, 70)
+        self._services_listctrl.InsertColumn(1, "Port", wx.LIST_FORMAT_LEFT, 50)
+        self._services_listctrl.InsertColumn(2, "Priority", wx.LIST_FORMAT_LEFT, 50)
+        self._services_listctrl.InsertColumn(3, "Weight", wx.LIST_FORMAT_LEFT, 50)
+        self._services_listctrl.InsertColumn(4, "Target", wx.LIST_FORMAT_LEFT, 140)
 
         sizer.Add(item = self._services_static)
         sizer.Add(item = self._services_listctrl, flag = wx.EXPAND)
@@ -419,8 +419,8 @@ class MainFrame(wx.Frame):
                                       size = (self._default_width, -1),
                                       style = wx.TE_READONLY | wx.TE_MULTILINE)
 
-        color_white = wx.Color(255, 255, 255)
-        color_blue  = wx.Color(0, 0, 128)
+        color_white = wx.Colour(255, 255, 255)
+        color_blue  = wx.Colour(0, 0, 128)
 
         self._image_static_bitmap.SetBackgroundColour(color_white)
 
@@ -472,7 +472,7 @@ class MainFrame(wx.Frame):
 
         if self._hostname_combobox.GetCount() > 0:
             self._hostname_combobox.SetSelection(0)
-    
+
     def set_radiodns_domains(self, radiodns_domains):
         self._domain_combobox.Clear()
 
@@ -481,7 +481,7 @@ class MainFrame(wx.Frame):
 
         if self._domain_combobox.GetCount() > 0:
             self._domain_combobox.SetSelection(0)
-        
+
         self._update_hostnames()
 
     def set_test_radiovis_services(self, test_radiovis_services):
@@ -524,7 +524,8 @@ class MainFrame(wx.Frame):
             self._services_listctrl.SetStringItem(idx, 4, service.target)
             self._services_listctrl.SetItemData(idx, i)
 
-        self._services_listctrl.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+        if self._services_listctrl.GetItemCount() > 0:
+            self._services_listctrl.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 
     def OnDomainComboBoxSelChanged(self, event):
         self._update_hostnames()
@@ -663,7 +664,7 @@ class MainFrame(wx.Frame):
     def radiovis_image(self, image_data):
         evt = ReceivedImageEvent(myEVT_RECEIVED_IMAGE, -1, image_data)
         wx.PostEvent(self, evt)
-    
+
     def OnReceivedImage(self, event):
         """
         Handler for the EVT_RECEIVED_IMAGE event.
@@ -701,10 +702,10 @@ class MainFrame(wx.Frame):
     def _init_logging(self):
         """
         Configure the logging module to output messages to a LogHandler object,
-        which passes the messages to MainFrame.log(), for display in the GUI. 
+        which passes the messages to MainFrame.log(), for display in the GUI.
         """
         logger = logging.getLogger() # Get the root logger
-        
+
         log_handler = LogHandler(self)
         log_handler.setLevel(logging.INFO)
         logger.addHandler(log_handler)

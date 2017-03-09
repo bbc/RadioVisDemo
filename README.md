@@ -20,7 +20,7 @@ On Windows, download install the following packages:
 
  * Python v2.5 or later: <http://www.python.org/download/>
 
- * wxPython v2.8.x: <http://www.wxpython.org>
+ * wxPython v3.0 or later: <http://www.wxpython.org>
 
  * dnspython v1.6.0 or later: <http://www.dnspython.org>
 
@@ -31,10 +31,15 @@ On Windows, download install the following packages:
 On Linux systems, use your package manager to install the following packages:
 
  * python
- * wxPython (or python-wxgtk2.8)
+ * wxPython (or python-wxgtk3.0)
  * python-dns
  * python-setuptools
  * python-nose
+
+### Ubuntu
+
+    $ sudo apt-get install python-wxgtk3.0 python-dnspython python-nose 
+
 
 RadioVisDemo was developed on Windows using the
 [ActiveState](http://www.activestate.com) Python distribution,
@@ -163,7 +168,7 @@ This software was written by [Chris Needham](https://github.com/chrisn) - chris.
 
 ## Contact and Legal Information
 
-Copyright 2009-2013 British Broadcasting Corporation
+Copyright 2009-2017 British Broadcasting Corporation
 
 The RadioVIS Demo Application is free software; you can redistribute it and/or
 modify it under the terms of the Apache License, Version 2.0.
@@ -174,4 +179,4 @@ or FITNESS FOR A PARTICULAR PURPOSE.  See the Apache License, Version 2.0 for
 more details.
 
 Your comments and suggestions are welcome. Please visit our website at
-http://www.bbc.co.uk/rd/projects/radiovis or send email to prototyping@bbc.co.uk.
+http://www.bbc.co.uk/rd/projects/radiovis or send email to irfs@bbc.co.uk.
