@@ -171,4 +171,12 @@
         <sid>c238</sid>
         <scids>0</scids>
     </radio_station>
+
+    <radio_station>
+        <name>BBC Radio London</name>
+        <broadcast_protocol>fm</broadcast_protocol>
+        <ecc>e1</ecc>
+        <pi>cc11</pi>
+        <freq>09490</freq>
+    </radio_station>
 </radio_stations>
