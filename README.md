@@ -1,4 +1,4 @@
-# RadioVIS Demo Application v1.0
+# RadioVIS Demo Application
 
 ## Introduction
 
@@ -55,7 +55,7 @@ To run the application, enter the following at a command prompt:
 
     python radiovis_demo.py
 
-The default setting in the **Domain** field is "radiodns.org". Change this option
+The default setting in the **Domain** field is `radiodns.org`. Change this option
 to perform radio station DNS lookups against a different domain, which is useful
 for testing RadioDNS services during development.
 
@@ -102,7 +102,7 @@ directory:
 
 This file contains a list of domains against which DNS lookups
 for radio stations can be performed. By default, this list includes
-radiodns.org and prototype0.net (which is a BBC development server),
+`radiodns.org` (for live services) and `test.radiodns.org` (for test purposes),
 but you can modify this list to refer to your own domain in order to test
 your own RadioDNS services before making them available via radiodns.org.
 
@@ -168,7 +168,7 @@ This software was written by [Chris Needham](https://github.com/chrisn) - chris.
 
 ## Contact and Legal Information
 
-Copyright 2009-2017 British Broadcasting Corporation
+Copyright 2009-2018 British Broadcasting Corporation
 
 The RadioVIS Demo Application is free software; you can redistribute it and/or
 modify it under the terms of the Apache License, Version 2.0.
