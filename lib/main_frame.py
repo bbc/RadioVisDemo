@@ -227,20 +227,20 @@ class MainFrame(wx.Frame):
         self._init_close_button(panel)
 
         content_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        content_sizer.Add(item = column1_sizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 10)
-        content_sizer.Add(item = column2_sizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 10)
+        content_sizer.Add(column1_sizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 10)
+        content_sizer.Add(column2_sizer, proportion = 1, flag = wx.ALL | wx.EXPAND, border = 10)
 
         button_sizer = wx.BoxSizer(wx.HORIZONTAL)
         button_sizer.AddStretchSpacer(1)
-        button_sizer.Add(item = self._close_button,
+        button_sizer.Add(self._close_button,
                          proportion = 0,
                          flag = wx.LEFT | wx.RIGHT | wx.BOTTOM | wx.EXPAND,
                          border = 10)
 
         # Use a BoxSizer to add a border/gap around sizer.
         border = wx.BoxSizer(wx.VERTICAL)
-        border.Add(item = content_sizer, proportion = 1, flag = wx.EXPAND)
-        border.Add(item = button_sizer, proportion = 0, flag = wx.EXPAND)
+        border.Add(content_sizer, proportion = 1, flag = wx.EXPAND)
+        border.Add(button_sizer, proportion = 0, flag = wx.EXPAND)
         panel.SetSizerAndFit(border)
         self.Fit()
 
@@ -255,8 +255,8 @@ class MainFrame(wx.Frame):
                                             size = (self._default_width, -1),
                                             style = wx.CB_READONLY)
 
-        sizer.Add(item = self._domain_static)
-        sizer.Add(item = self._domain_combobox, flag = wx.EXPAND)
+        sizer.Add(self._domain_static)
+        sizer.Add(self._domain_combobox, flag = wx.EXPAND)
 
         self._domain_combobox.Append("radiodns.org")
         self._domain_combobox.SetSelection(0)
@@ -270,8 +270,8 @@ class MainFrame(wx.Frame):
                                               size = (self._default_width, -1),
                                               style = wx.CB_READONLY)
 
-        sizer.Add(item = self._hostname_static)
-        sizer.Add(item = self._hostname_combobox, flag = wx.EXPAND)
+        sizer.Add(self._hostname_static)
+        sizer.Add(self._hostname_combobox, flag = wx.EXPAND)
 
         resolve_button = wx.Button(parent = parent,
                                    id = wx.ID_ANY,
@@ -279,8 +279,8 @@ class MainFrame(wx.Frame):
 
         self.Bind(wx.EVT_BUTTON, self.OnResolveButton, resolve_button)
 
-        sizer.AddSpacer((0, 0))
-        sizer.Add(item = resolve_button)
+        sizer.AddSpacer(0)
+        sizer.Add(resolve_button)
 
     def _init_cname_controls(self, parent, sizer):
         self._cname_static = wx.StaticText(parent = parent,
@@ -292,8 +292,8 @@ class MainFrame(wx.Frame):
                                        size = (self._default_width, -1),
                                        style = wx.TE_READONLY)
 
-        sizer.Add(item = self._cname_static)
-        sizer.Add(item = self._cname_text, flag = wx.EXPAND)
+        sizer.Add(self._cname_static)
+        sizer.Add(self._cname_text, flag = wx.EXPAND)
 
     def _init_services_controls(self, parent, sizer):
         self._services_static = wx.StaticText(parent = parent,
@@ -310,8 +310,8 @@ class MainFrame(wx.Frame):
         self._services_listctrl.InsertColumn(3, "Weight", wx.LIST_FORMAT_LEFT, 50)
         self._services_listctrl.InsertColumn(4, "Target", wx.LIST_FORMAT_LEFT, 140)
 
-        sizer.Add(item = self._services_static)
-        sizer.Add(item = self._services_listctrl, flag = wx.EXPAND)
+        sizer.Add(self._services_static)
+        sizer.Add(self._services_listctrl, flag = wx.EXPAND)
 
     def _init_log_controls(self, parent, sizer):
         self._log_static = wx.StaticText(parent = parent,
@@ -322,8 +322,8 @@ class MainFrame(wx.Frame):
                                        id = wx.ID_ANY,
                                        size = (self._default_width, 100))
 
-        sizer.Add(item = self._log_static)
-        sizer.Add(item = self._log_listbox, flag = wx.EXPAND)
+        sizer.Add(self._log_static)
+        sizer.Add(self._log_listbox, flag = wx.EXPAND)
 
         self._set_current_row_growable(sizer)
 
@@ -336,8 +336,8 @@ class MainFrame(wx.Frame):
                                             id = wx.ID_ANY,
                                             size = (self._default_width, 100))
 
-        sizer.Add(item = self._messages_static)
-        sizer.Add(item = self._messages_listbox, flag = wx.EXPAND)
+        sizer.Add(self._messages_static)
+        sizer.Add(self._messages_listbox, flag = wx.EXPAND)
 
         self._set_current_row_growable(sizer)
 
@@ -360,14 +360,14 @@ class MainFrame(wx.Frame):
         connect_sizer.Add(connect_button, flag = wx.ALIGN_TOP)
         connect_sizer.AddSpacer(10)
 
-        checkbox_sizer = wx.GridSizer(cols = 1, vgap = 4)
+        checkbox_sizer = wx.GridSizer(cols = 1, vgap = 4, hgap = 0)
         checkbox_sizer.Add(self._proxy_http_button)
         checkbox_sizer.Add(self._proxy_stomp_button)
 
         connect_sizer.Add(checkbox_sizer, flag = wx.ALIGN_CENTER_VERTICAL)
 
-        sizer.AddSpacer((0, 0))
-        sizer.Add(item = connect_sizer)
+        sizer.AddSpacer(0)
+        sizer.Add(connect_sizer)
 
     def _init_image_url_controls(self, parent, sizer):
         self._image_url_static = wx.StaticText(parent = parent,
@@ -379,8 +379,8 @@ class MainFrame(wx.Frame):
                                            size = (self._default_width, -1),
                                            style = wx.TE_READONLY)
 
-        sizer.Add(item = self._image_url_static)
-        sizer.Add(item = self._image_url_text, flag = wx.EXPAND)
+        sizer.Add(self._image_url_static)
+        sizer.Add(self._image_url_text, flag = wx.EXPAND)
 
     def _init_link_url_controls(self, parent, sizer):
         self._link_url_static = wx.StaticText(parent = parent,
@@ -392,8 +392,8 @@ class MainFrame(wx.Frame):
                                           size = (self._default_width, -1),
                                           style = wx.TE_READONLY)
 
-        sizer.Add(item = self._link_url_static)
-        sizer.Add(item = self._link_url_text, flag = wx.EXPAND)
+        sizer.Add(self._link_url_static)
+        sizer.Add(self._link_url_text, flag = wx.EXPAND)
 
     def _init_image_controls(self, parent, sizer):
         self._image_static = wx.StaticText(parent = parent,
@@ -406,8 +406,8 @@ class MainFrame(wx.Frame):
                                                     size = (320 + 4, 240 + 4),
                                                     style = wx.ST_NO_AUTORESIZE | wx.BORDER_SUNKEN)
 
-        sizer.Add(item = self._image_static)
-        sizer.Add(item = self._image_static_bitmap)
+        sizer.Add(self._image_static)
+        sizer.Add(self._image_static_bitmap)
 
     def _init_text_controls(self, parent, sizer):
         self._text_static = wx.StaticText(parent = parent,
@@ -429,15 +429,15 @@ class MainFrame(wx.Frame):
                        style = wx.FONTSTYLE_NORMAL,
                        weight = wx.FONTWEIGHT_NORMAL,
                        underline = False,
-                       face = "Verdana",
+                       faceName = "Verdana",
                        encoding = wx.FONTENCODING_SYSTEM)
 
         self._text_text.SetFont(font)
         self._text_text.SetForegroundColour(color_blue)
         self._text_text.SetBackgroundColour(color_white)
 
-        sizer.Add(item = self._text_static)
-        sizer.Add(item = self._text_text, flag = wx.EXPAND)
+        sizer.Add(self._text_static)
+        sizer.Add(self._text_text, flag = wx.EXPAND)
 
         self._set_current_row_growable(sizer)
 
@@ -517,11 +517,11 @@ class MainFrame(wx.Frame):
 
         for i in range(len(self._services)):
             service = self._services[i]
-            idx = self._services_listctrl.InsertStringItem(0, service.name)
-            self._services_listctrl.SetStringItem(idx, 1, str(service.port))
-            self._services_listctrl.SetStringItem(idx, 2, str(service.priority))
-            self._services_listctrl.SetStringItem(idx, 3, str(service.weight))
-            self._services_listctrl.SetStringItem(idx, 4, service.target)
+            idx = self._services_listctrl.InsertItem(0, service.name)
+            self._services_listctrl.SetItem(idx, 1, str(service.port))
+            self._services_listctrl.SetItem(idx, 2, str(service.priority))
+            self._services_listctrl.SetItem(idx, 3, str(service.weight))
+            self._services_listctrl.SetItem(idx, 4, service.target)
             self._services_listctrl.SetItemData(idx, i)
 
         if self._services_listctrl.GetItemCount() > 0:
@@ -689,8 +689,8 @@ class MainFrame(wx.Frame):
         nolog = wx.LogNull()
 
         try:
-            image = wx.ImageFromStream(stream)
-            bitmap = wx.BitmapFromImage(image)
+            image = wx.Image(stream)
+            bitmap = wx.Bitmap(image)
         except wx.PyAssertionError, ex:
             # Invalid image data.
             logging.warning(ex.message)

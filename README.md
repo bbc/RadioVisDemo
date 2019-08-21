@@ -20,7 +20,7 @@ On Windows, download install the following packages:
 
  * Python v2.5 or later: <http://www.python.org/download/>
 
- * wxPython v3.0 or later: <http://www.wxpython.org>
+ * wxPython v4.0 or later: <http://www.wxpython.org>
 
  * dnspython v1.6.0 or later: <http://www.dnspython.org>
 
