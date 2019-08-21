@@ -36,6 +36,13 @@ On Linux systems, use your package manager to install the following packages:
  * python-setuptools
  * python-nose
 
+On Mac, you can use PIP to install the following packages:
+
+ * `pip install wxPython`
+ * `pip install dnspython`
+ * `pip install nose` 
+
+
 ### Ubuntu
 
     $ sudo apt-get install python-wxgtk3.0 python-dnspython python-nose 
