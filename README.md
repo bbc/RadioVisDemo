@@ -36,11 +36,11 @@ On Linux systems, use your package manager to install the following packages:
  * python-setuptools
  * python-nose
 
-On Mac, you can use PIP to install the following packages:
+On Mac, you can use PIP to install the required packages:
 
- * `pip install wxPython`
- * `pip install dnspython`
- * `pip install nose` 
+```
+pip install -r requirements.txt
+```
 
 
 ### Ubuntu
