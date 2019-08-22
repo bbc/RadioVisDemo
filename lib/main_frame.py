@@ -680,21 +680,16 @@ class MainFrame(wx.Frame):
         Create and return a wx.Bitmap object from image data, which may be
         PNG, JPG, GIF, or other format.
         """
-        stream = io.StringIO(image_data)
+        stream = io.BytesIO(image_data)
 
         bitmap = None
-
-        # http://lists.wxwidgets.org/pipermail/wxpython-users/2005-December/045621.html
-        nolog = wx.LogNull()
 
         try:
             image = wx.Image(stream)
             bitmap = wx.Bitmap(image)
-        except wx.PyAssertionError as ex:
+        except wx.wxAssertionError as ex:
             # Invalid image data.
-            logging.warning(ex.message)
-
-        del nolog
+            logging.warning("Couldn't create image")
 
         return bitmap
 

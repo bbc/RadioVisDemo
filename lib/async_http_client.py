@@ -48,7 +48,7 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
             self._request_path = url
 
         self._header = None
-        self._data = ""
+        self._data = b""
 
         self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -82,7 +82,7 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
 
         request += "\r\n"
 
-        self.send(request)
+        self.send(request.encode("utf-8"))
 
     def handle_expt(self):
         # connection failed
@@ -95,23 +95,23 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
         self._client.http_received_data(self._data)
 
         self._header = None
-        self._data = ""
+        self._data = b""
 
     def handle_read(self):
         data = self.recv(2048)
 
         if not self._header:
             # check if we have a full header
-            self._data = self._data + data
+            self._data += data
 
-            i = self._data.find("\r\n\r\n")
+            i = self._data.find(b"\r\n\r\n")
 
             if i == -1:
                 return # no empty line
             else:
                 self._header = self._data[:i + 2]
                 data = self._data[i + 4:]
-                self._data = ""
+                self._data = b""
 
         if data:
             self._data += data
@@ -152,7 +152,7 @@ class HttpClientThread(threading.Thread):
                     else:
                         self.log("Discarding url: %s" % url)
                         self._queue.task_done()
-                except Queue.Empty:
+                except queue.Empty:
                     pass
             else:
                 # Wait for an item to appear in the queue.

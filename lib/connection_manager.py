@@ -13,10 +13,9 @@
 # permissions and limitations under the License.
 
 import logging
+import socks
 import urllib
 from urllib import request
-
-from . import socks
 
 from .async_http_client import HttpClientThread
 from .dns_resolver import DnsResolver
