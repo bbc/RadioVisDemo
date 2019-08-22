@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -16,13 +16,13 @@
 Test cases for RadioStationList class.
 """
 
-from dab_radio_station import DabRadioStation
-from fm_radio_station import FmRadioStation
-from hd_radio_station import HdRadioStation
-from drm_radio_station import DrmRadioStation, AmssRadioStation
-from radio_station_list import RadioStationList
+from lib.dab_radio_station import DabRadioStation
+from lib.fm_radio_station import FmRadioStation
+from lib.hd_radio_station import HdRadioStation
+from lib.drm_radio_station import DrmRadioStation, AmssRadioStation
+from lib.radio_station_list import RadioStationList
 
-import StringIO
+import io
 import nose.tools
 
 def test_RadioStationList():
@@ -66,7 +66,7 @@ def test_RadioStationList():
     </radio_stations>
     """
 
-    stream = StringIO.StringIO(xml)
+    stream = io.StringIO(xml)
     radio_stations = RadioStationList(stream)
 
     assert len(radio_stations) == 5
@@ -100,6 +100,6 @@ def test_RadioStationList_Error():
     </radio_stations>
     """
 
-    stream = StringIO.StringIO(xml)
+    stream = io.StringIO(xml)
 
     nose.tools.assert_raises(ValueError, RadioStationList, stream)

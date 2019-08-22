@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -12,8 +12,10 @@
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-from radio_station import RadioStation
 import re
+
+from .radio_station import RadioStation
+
 
 class DrmRadioStation(RadioStation):
     """
@@ -30,7 +32,7 @@ class DrmRadioStation(RadioStation):
         if re.match('^[0-9A-F]{6}$', sid, re.IGNORECASE):
             self._sid = sid
         else:
-            raise RuntimeError, "Invalid sid"
+            raise ValueError("Invalid sid")
 
     def _get_query(self):
         return [self._sid]
@@ -50,7 +52,7 @@ class AmssRadioStation(RadioStation):
         if re.match('^[0-9A-F]{6}$', sid, re.IGNORECASE):
             self._sid = sid
         else:
-            raise RuntimeError, "Invalid sid"
+            raise ValueError("Invalid sid")
 
     def _get_query(self):
         return [self._sid]

@@ -16,7 +16,7 @@
 Test cases for FmRadioStation class.
 """
 
-from fm_radio_station import FmRadioStation
+from lib.fm_radio_station import FmRadioStation
 
 def test_FmRadioStation():
     p = FmRadioStation(name = 'FM Station', ecc = 'e1', pi = 'c586', freq = 9580)

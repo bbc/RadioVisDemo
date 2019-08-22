@@ -1,4 +1,4 @@
-# Copyright 2009, 2013 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -14,10 +14,10 @@
 
 import asyncore
 import logging
-import Queue
+import queue
 import socket
 import threading
-import urlparse
+import urllib
 
 
 class AsyncHttpClient(asyncore.dispatcher_with_send):
@@ -36,7 +36,7 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
         self._proxy_settings = proxy_settings
 
         if self._proxy_settings is None:
-            url_components = urlparse.urlparse(url)
+            url_components = urllib.parse.urlparse(url)
             self._request_host = url_components.hostname
             self._request_path = url_components.path
             self._request_port = url_components.port
@@ -63,7 +63,7 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
         try:
             self.connect(host_and_port)
             result = True
-        except socket.error, ex:
+        except socket.error as ex:
             self.log("Error %d connecting to %s port %d: %s" % (ex.errno, host_and_port[0], host_and_port[1], ex.strerror))
             result = False
 
@@ -127,7 +127,7 @@ class HttpClientThread(threading.Thread):
     def __init__(self, client):
         threading.Thread.__init__(self)
         self._client = client
-        self._queue = Queue.Queue()
+        self._queue = queue.Queue()
         self._http_client = None
 
     def request(self, url, proxy_settings = None):

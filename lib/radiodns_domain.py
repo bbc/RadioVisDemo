@@ -1,4 +1,4 @@
-# Copyright 2010 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -28,7 +28,7 @@ class RadioDnsDomainList(object):
 
         self._index = 0
 
-    def next(self):
+    def __next__(self):
         """
         Return the next domain in the list.
         """

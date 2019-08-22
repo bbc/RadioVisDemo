@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -70,13 +70,14 @@ class DnsResolver:
                 if len(ans.rrset.items) == 1:
                     # Remove last (blank) field from host name.
                     labels = ans[0].target.labels[0:-1]
+                    labels = map(lambda s: str(s, 'utf-8'), labels)
                     cname = '.'.join(labels)
 
-            except dns.resolver.NoAnswer, e:
+            except dns.resolver.NoAnswer as e:
                 self.log("No answer")
-            except dns.resolver.NXDOMAIN, e:
+            except dns.resolver.NXDOMAIN as e:
                 pass
-            except dns.exception.DNSException, e:
+            except dns.exception.DNSException as e:
                 self.log("Exception: " + str(type(e)))
 
         return cname
@@ -97,11 +98,11 @@ class DnsResolver:
         try:
             ans = self._resolver.query(query, 'SRV')
 
-        except dns.resolver.NoAnswer, e:
+        except dns.resolver.NoAnswer as e:
             self.log("No answer")
-        except dns.resolver.NXDOMAIN, e:
+        except dns.resolver.NXDOMAIN as e:
             pass
-        except dns.exception.DNSException, e:
+        except dns.exception.DNSException as e:
             self.log("Exception: " + str(type(e)))
 
         services = []
@@ -111,6 +112,7 @@ class DnsResolver:
                 # Remove last (blank) field from hostname then create
                 # hostname string by joining with ".".
                 target = record.target.labels[0:-1]
+                target = map(lambda s: str(s, 'utf-8'), target)
                 target = ".".join(target)
 
                 self.log("Found: " + target + ", port " + str(record.port))

@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -16,7 +16,7 @@
 Test cases for HdRadioStation class.
 """
 
-from hd_radio_station import HdRadioStation
+from lib.hd_radio_station import HdRadioStation
 
 def test_HdRadioStation():
     p = HdRadioStation('HD Station', 'aaaaa', 'ccc')

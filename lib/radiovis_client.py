@@ -1,4 +1,4 @@
-# Copyright 2009-2011 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -25,7 +25,7 @@ class RadioVisClient(stomp.ConnectionListener):
                  passcode = None):
 
         stomp.ConnectionListener.__init__(self)
-        
+
         if proxy_settings is not None:
             proxy = {
                 'type': proxy_settings.get_proxy_type(),
@@ -107,7 +107,7 @@ class RadioVisClient(stomp.ConnectionListener):
         lines = body.split('\n')
 
         for line in lines:
-            # Remove leading and trailing whitespace. 
+            # Remove leading and trailing whitespace.
             line = line.strip()
 
             # Check for TEXT message.
@@ -123,18 +123,18 @@ class RadioVisClient(stomp.ConnectionListener):
 
                 if match:
                     url = match.group(1)
-                    
+
                     if 'link' in headers:
                         link = headers['link']
                     else:
                         link = None
-                    
+
                     if 'trigger-time' in headers:
                         # TODO: Parse date_time and construct a datetime object.
                         date_time = headers['trigger-time']
                     else:
                         date_time = None
-                    
+
                     self.notify_show(url, link, date_time)
                 else:
                     pass
@@ -192,7 +192,7 @@ class RadioVisClient(stomp.ConnectionListener):
         Send a SHOW RadioVIS message.
         """
         message = "SHOW " + image_url
-        
+
         headers = {}
 
         if link_url is not None:

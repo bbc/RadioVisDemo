@@ -1,4 +1,4 @@
-# Copyright 2009-2017 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -12,13 +12,12 @@
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
+import io
 import logging
 import threading
 import wx
 
-import StringIO
-
-from dns_resolver import ServiceRecord
+from .dns_resolver import ServiceRecord
 
 
 class RadioStationAdapter:
@@ -681,7 +680,7 @@ class MainFrame(wx.Frame):
         Create and return a wx.Bitmap object from image data, which may be
         PNG, JPG, GIF, or other format.
         """
-        stream = StringIO.StringIO(image_data)
+        stream = io.StringIO(image_data)
 
         bitmap = None
 
@@ -691,7 +690,7 @@ class MainFrame(wx.Frame):
         try:
             image = wx.Image(stream)
             bitmap = wx.Bitmap(image)
-        except wx.PyAssertionError, ex:
+        except wx.PyAssertionError as ex:
             # Invalid image data.
             logging.warning(ex.message)
 
