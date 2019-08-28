@@ -2,14 +2,12 @@ dist: bionic
 language: python
 
 python:
-  - "2.7"
-
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install -y libgtk-3-dev
+  - "3.5"
 
 install:
-  - pip install -r requirements.txt
+  - sudo apt-get update
+  - sudo apt-get install -y libgtk-3-dev python-wxgtk4.0
+  - pip install -r requirements-ubuntu.txt
 
 script:
   - nosetests

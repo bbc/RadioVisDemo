@@ -355,6 +355,8 @@ class MainFrame(wx.Frame):
                                                id = wx.ID_ANY,
                                                label = "Use proxy server for Stomp connection")
 
+        self._proxy_stomp_button.Disable()
+
         connect_sizer = wx.BoxSizer(wx.HORIZONTAL)
         connect_sizer.Add(connect_button, flag = wx.ALIGN_TOP)
         connect_sizer.AddSpacer(10)

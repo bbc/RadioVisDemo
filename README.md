@@ -2,7 +2,7 @@
 
 ## Introduction
 
-RadioVISDemo is a demonstration application for RadioDNS and RadioVIS. RadioVIS
+RadioVisDemo is a demonstration application for RadioDNS and RadioVIS. RadioVIS
 is the visualisation protocol that forms part of the RadioDNS suite of
 application protocols. The software follows RadioDNS Technical Specification
 v0.6 and RadioVIS Technical Specification V1.0.0.
@@ -13,50 +13,40 @@ software.
 
 ## Installation
 
-RadioVISDemo is a Python application and requires several software to be
+RadioVisDemo is a Python application and requires several dependencies to be
 installed.
 
 On Windows, download install the following packages:
 
- * Python v2.5 or later: <http://www.python.org/download/>
+ * Python v3.5 or later: <http://www.python.org/download/>
 
  * wxPython v4.0 or later: <http://www.wxpython.org>
 
  * dnspython v1.6.0 or later: <http://www.dnspython.org>
 
- * setuptools v0.6c9 or later: <http://pypi.python.org/pypi/setuptools>
+ * stomp.py v4.1 or later: <https://pypi.org/project/stomp.py/>
 
  * nose v1.0.0: <https://nose.readthedocs.org>
 
 On Linux systems, use your package manager to install the following packages:
 
  * python
- * wxPython (or python-wxgtk3.0)
- * python-dns
- * python-setuptools
- * python-nose
+ * wxPython (or python-wxgtk4.0)
+
+### Mac OSX
 
 On Mac, you can use PIP to install the required packages:
 
-```
+```bash
 pip install -r requirements.txt
 ```
 
+### Ubuntu 18.04 and later
 
-### Ubuntu
+    $ sudo apt-get install python-wxgtk4.0
+    $ pip install -r requirements-ubuntu.txt
 
-    $ sudo apt-get install python-wxgtk3.0 python-dnspython python-nose 
-
-
-RadioVisDemo was developed on Windows using the
-[ActiveState](http://www.activestate.com) Python distribution,
-and has been tested on Windows XP and Ubuntu v8.10.
-
-The source code includes a modified version of Jason R Briggs's stomp.py module,
-which implements the STOMP protocol. Please visit
-<https://code.google.com/p/stomppy/> for more information.
-
-# Running RadioVISDemo
+# Running RadioVisDemo
 
 To run the application, enter the following at a command prompt:
 
@@ -175,7 +165,7 @@ This software was written by [Chris Needham](https://github.com/chrisn) - chris.
 
 ## Contact and Legal Information
 
-Copyright 2009-2018 British Broadcasting Corporation
+Copyright 2009-2019 British Broadcasting Corporation
 
 The RadioVIS Demo Application is free software; you can redistribute it and/or
 modify it under the terms of the Apache License, Version 2.0.
