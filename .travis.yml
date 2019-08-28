@@ -8,5 +8,8 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install -y libgtk-3-dev python-wxgtk4.0 python-dnspython python-nose
 
+install:
+  -
+
 script:
   - nosetests
