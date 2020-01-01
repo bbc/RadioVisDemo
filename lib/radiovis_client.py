@@ -60,12 +60,10 @@ class RadioVisClient(stomp.ConnectionListener):
         self._text_topic = text_topic
         self._image_topic = image_topic
 
-        self._connection.start()
-
         self._connection.connect(wait = True)
 
     def stop(self):
-        self._connection.stop()
+        self._connection.disconnect()
 
     def on_connected(self, headers, body):
         """
