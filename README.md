@@ -1,14 +1,20 @@
+[![Build Status](https://travis-ci.org/bbc/RadioVisDemo.svg?branch=master)](https://travis-ci.org/bbc/RadioVisDemo)
+
 # RadioVIS Demo Application
 
 ## Introduction
 
 RadioVisDemo is a demonstration application for RadioDNS and RadioVIS. RadioVIS
 is the visualisation protocol that forms part of the RadioDNS suite of
-application protocols. The software follows RadioDNS Technical Specification
-v0.6 and RadioVIS Technical Specification V1.0.0.
+application protocols, also known as Hybrid Digital Radio (DAB, DRM, RadioDNS)
+Slideshow, defined in the following ETSI standards:
 
-Please visit <http://radiodns.org> for more information about RadioDNS, and
-<http://www.bbc.co.uk/rd/projects/radiovis> to obtain the latest release of this
+* [ETSI TS 103 270 v1.3.1 - RadioDNS Hybrid Radio; Hybrid lookup for radio services](https://www.etsi.org/deliver/etsi_ts/103200_103299/103270/01.03.01_60/ts_103270v010301p.pdf)
+* [ETSI TS 101 499 v3.1.1 - Slideshow](http://www.etsi.org/deliver/etsi_ts/101400_101499/101499/03.01.01_60/ts_101499v030101p.pdf)
+
+Please visit <https://radiodns.org> for more information about RadioDNS, and
+<https://www.bbc.co.uk/rd/projects/radiovis> to learn more about this project,
+and <https://github.com/bbc/RadioVisDemo> to obtain the latest release of this
 software.
 
 ## Installation
@@ -16,26 +22,31 @@ software.
 RadioVisDemo is a Python application and requires several dependencies to be
 installed.
 
-On Windows, download install the following packages:
+### Ubuntu
 
- * Python v3.5 or later: <http://www.python.org/download/>
+On Ubuntu, use your package manager to install the following packages:
 
- * wxPython v4.0 or later: <http://www.wxpython.org>
-
- * dnspython v1.6.0 or later: <http://www.dnspython.org>
-
- * stomp.py v4.1 or later: <https://pypi.org/project/stomp.py/>
-
- * nose v1.0.0: <https://nose.readthedocs.org>
-
-On Linux systems, use your package manager to install the following packages:
-
- * python
+ * python3
  * wxPython (or python-wxgtk4.0)
+
+```bash
+sudo apt-get install python3 python-wxgtk4.0
+pip3 install -r requirements-ubuntu.txt
+```
+
+### Windows
+
+On Windows, download and install Python v3.5 or later from
+<http://www.python.org/download/>, then use pip to install the required
+packages:
+
+```bash
+pip install -r requirements.txt
+```
 
 ### Mac OSX
 
-On Mac, you can use PIP to install the required packages:
+On Mac, you can use pip to install the required packages:
 
 ```bash
 pip install -r requirements.txt
@@ -43,14 +54,18 @@ pip install -r requirements.txt
 
 ### Ubuntu 18.04 and later
 
-    $ sudo apt-get install python-wxgtk4.0
-    $ pip install -r requirements-ubuntu.txt
+```bash
+sudo apt-get install python-wxgtk4.0
+pip install -r requirements-ubuntu.txt
+```
 
 # Running RadioVisDemo
 
 To run the application, enter the following at a command prompt:
 
-    python radiovis_demo.py
+```bash
+python3 radiovis_demo.py
+```
 
 The default setting in the **Domain** field is `radiodns.org`. Change this option
 to perform radio station DNS lookups against a different domain, which is useful
@@ -138,7 +153,9 @@ contain the following entries:
 The `test` directory contains unit tests. To run the tests use the following
 command:
 
-    nosetests
+```bash
+nosetests
+```
 
 ## Limitations
 
@@ -153,6 +170,9 @@ This software has a few limitations:
 
  * Error and redirect statuses are not handled when retrieving images over HTTP.
 
+ * STOMP connections cannot be routed via a SOCKS proxy (fixing this requires
+   changes to the stomp.py module).
+
 ## Resources
 
 For more information, please visit BBC R&D's
@@ -165,7 +185,7 @@ This software was written by [Chris Needham](https://github.com/chrisn) - chris.
 
 ## Contact and Legal Information
 
-Copyright 2009-2019 British Broadcasting Corporation
+Copyright 2009-2020 British Broadcasting Corporation
 
 The RadioVIS Demo Application is free software; you can redistribute it and/or
 modify it under the terms of the Apache License, Version 2.0.
