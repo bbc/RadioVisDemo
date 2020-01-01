@@ -173,12 +173,6 @@ This software has a few limitations:
  * STOMP connections cannot be routed via a SOCKS proxy (fixing this requires
    changes to the stomp.py module).
 
-## Resources
-
-For more information, please visit BBC R&D's
-[RadioVIS project page](http://www.bbc.co.uk/rd/projects/radiovis)
-and the [RadioDNS website](http://radiodns.org/).
-
 ## Authors
 
 This software was written by [Chris Needham](https://github.com/chrisn) - chris.needham at bbc.co.uk.
@@ -195,5 +189,6 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
 or FITNESS FOR A PARTICULAR PURPOSE.  See the Apache License, Version 2.0 for
 more details.
 
-Your comments and suggestions are welcome. Please visit our website at
-http://www.bbc.co.uk/rd/projects/radiovis or send email to irfs@bbc.co.uk.
+Your comments and suggestions are welcome. Please visit
+[our website](https://www.bbc.co.uk/rd/projects/radiovis) or send email to
+irfs@bbc.co.uk.
