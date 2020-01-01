@@ -70,7 +70,7 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
         return result
 
     def handle_connect(self):
-        request = "GET %s HTTP/1.0\r\n" % self._request_path
+        request = "GET %s HTTP/1.1\r\n" % self._request_path
 
         if self._request_host is not None:
             request += "Host: %s" % self._request_host
@@ -80,6 +80,9 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
 
             request += "\r\n"
 
+        request += "User-Agent: RadioVISDemo\r\n"
+        request += "Accept: */*\r\n"
+        request += "Connection: close\r\n"
         request += "\r\n"
 
         self.send(request.encode("utf-8"))
