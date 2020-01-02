@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -12,8 +12,9 @@
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-from radio_station import RadioStation
 import re
+
+from .radio_station import RadioStation
 
 
 class DabRadioStation(RadioStation):
@@ -26,7 +27,7 @@ class DabRadioStation(RadioStation):
 
         @param ecc: The broadcast extended country code (ECC).
 
-        @param eid: The broadcast ensemble identifier (EId). 
+        @param eid: The broadcast ensemble identifier (EId).
 
         @param sid: The broadcast service identifier (SId).
 
@@ -38,7 +39,7 @@ class DabRadioStation(RadioStation):
 
         @param uatype: The broadcast user application type (UAType). If AppTy
         is specified, UAType must also be specified.
-        
+
         @param pa: The broadcast packet address, which is mandatory if the
         audio service is delivered as data in an independent service component.
         """
@@ -47,60 +48,60 @@ class DabRadioStation(RadioStation):
         if re.match('^[0-9A-F]{3}$', ecc, re.IGNORECASE):
             self._ecc = ecc
         else:
-            raise ValueError, "Invalid ecc"
+            raise ValueError("Invalid ecc")
 
         if re.match('^[0-9A-F]{4}$', eid, re.IGNORECASE):
             self._eid = eid
         else:
-            raise ValueError, "Invalid eid"
+            raise ValueError("Invalid eid")
 
         if re.match('^[0-9A-F]{4}$', sid, re.IGNORECASE) \
         or re.match('^[0-9A-F]{8}$', sid, re.IGNORECASE):
             self._sid = sid
         else:
-            raise ValueError, "Invalid sid"
+            raise ValueError("Invalid sid")
 
         if re.match('^[0-9A-F]{1}$', scids, re.IGNORECASE) \
         or re.match('^[0-9A-F]{3}$', scids, re.IGNORECASE):
             self._scids = scids
         else:
-            raise ValueError, "Invalid scids"
+            raise ValueError("Invalid scids")
 
         if appty is not None:
             if re.match('^[0-9A-F]{2}$', appty, re.IGNORECASE):
                 self._appty_uatype = appty
             else:
-                raise ValueError, "Invalid appty"
+                raise ValueError("Invalid appty")
 
             if uatype is not None:
                 if re.match('^[0-9A-F]{3}$', uatype, re.IGNORECASE):
                     self._appty_uatype += "-" + uatype
                 else:
-                    raise ValueError, "Invalid uatype"
+                    raise ValueError("Invalid uatype")
             else:
-                raise ValueError, "Both appty and uatype must be specified"
-            
+                raise ValueError("Both appty and uatype must be specified")
+
             if pa is not None:
-                raise ValueError, "pa and appty-uatype are mutually exclusive"
+                raise ValueError("pa and appty-uatype are mutually exclusive")
         else:
             if uatype is not None:
-                raise ValueError, "Both appty and uatype must be specified"
-            
+                raise ValueError("Both appty and uatype must be specified")
+
             self._appty_uatype = None
 
         if pa is not None:
             try:
                 pa = int(pa)
             except (ValueError, TypeError):
-                raise ValueError, "Invalid pa"
-    
+                raise ValueError("Invalid pa")
+
             if pa >= 0 and pa <= 1023:
                 self._pa = pa
             else:
-                raise ValueError, "Invalid pa"
+                raise ValueError("Invalid pa")
 
             if appty is not None or uatype is not None:
-                raise ValueError, "pa and appty-uatype are mutually exclusive"
+                raise ValueError("pa and appty-uatype are mutually exclusive")
         else:
             self._pa = None
 

@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -25,7 +25,7 @@ class TestRadioVisService(object):
         @param name: The name of the RadioVIS service.
 
         @param hostname: The hostname of the RadioVIS server.
-        
+
         @param port: The port number of the RadioVIS service.
 
         @param text_topic: The topic name for text messages.
@@ -40,7 +40,7 @@ class TestRadioVisService(object):
         try:
             port = int(port)
         except (TypeError, ValueError):
-            raise ValueError, "invalid port"
+            raise ValueError("invalid port")
 
         self._port = port
 
@@ -95,7 +95,7 @@ class TestRadioVisServiceList(object):
 
         self._index = 0
 
-    def next(self):
+    def __next__(self):
         """
         Return the next L{TestRadioVisService} object in the list.
         """

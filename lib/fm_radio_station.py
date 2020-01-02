@@ -1,4 +1,4 @@
-# Copyright 2009-2011 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -12,8 +12,10 @@
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
-from radio_station import RadioStation
 import re
+
+from .radio_station import RadioStation
+
 
 class FmRadioStation(RadioStation):
     """
@@ -38,17 +40,17 @@ class FmRadioStation(RadioStation):
         if pi is not None and re.match('^[0-9A-F]{4}$', pi, re.IGNORECASE):
             self._pi = pi
         else:
-            raise ValueError, "Invalid pi"
+            raise ValueError("Invalid pi")
 
         if country is not None:
             # Check for 2-letter ISO country code.
             if re.match('^[A-Z]{2}$', country, re.IGNORECASE):
                 self._country = country
             else:
-                raise ValueError, "Invalid country"
+                raise ValueError("Invalid country")
 
             if ecc is not None:
-                raise ValueError, "country and ecc are mutually exclusive"
+                raise ValueError("country and ecc are mutually exclusive")
         elif ecc is not None:
             # Check for 2-hex-digit extended country code, and concatenate
             # with the first character of the RDS PI code.
@@ -56,17 +58,17 @@ class FmRadioStation(RadioStation):
             if re.match('^[0-9A-F]{2}$', ecc, re.IGNORECASE):
                 self._country = self._pi[0] + ecc
             else:
-                raise ValueError, "Invalid extended country code"
+                raise ValueError("Invalid extended country code")
 
         try:
             freq = int(freq)
         except (ValueError, TypeError):
-            raise ValueError, "Invalid freq"
+            raise ValueError("Invalid freq")
 
         if freq >= 0 and freq <= 99999:
             self._freq = "%05u" % freq
         else:
-            raise ValueError, "Invalid freq"
+            raise ValueError("Invalid freq")
 
     def _get_query(self):
         return [self._freq, self._pi, self._country]

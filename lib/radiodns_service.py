@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -19,7 +19,7 @@ class RadioDnsService(object):
     def __init__(self, name, record):
         """
         @param name: The service name, e.g. "RadioVIS"
-        
+
         @param record: the SRV record, e.g. "_radiovis._tcp"
         """
         self._name = name
@@ -51,7 +51,7 @@ class RadioDnsServiceList(object):
 
         self._index = 0
 
-    def next(self):
+    def __next__(self):
         """
         Return the next L{RadioDnsService} object in the list.
         """

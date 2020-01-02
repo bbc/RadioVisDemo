@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -16,7 +16,7 @@
 Test cases for DabRadioStation class.
 """
 
-from dab_radio_station import DabRadioStation
+from lib.dab_radio_station import DabRadioStation
 
 from nose.tools import assert_raises
 

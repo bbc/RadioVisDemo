@@ -2,11 +2,14 @@ dist: bionic
 language: python
 
 python:
-  - "2.7"
+  - "3.6"
+  - "3.7"
+  - "3.8"
 
 install:
   - sudo apt-get update
-  - sudo apt-get install -y libgtk-3-dev python-wxgtk4.0 python-dnspython python-nose
+  - sudo apt-get install -y libgtk-3-dev python-wxgtk4.0
+  - pip install -r requirements-ubuntu.txt
 
 script:
   - nosetests

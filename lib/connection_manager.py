@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -15,12 +15,12 @@
 import logging
 import socks
 import urllib
-import urlparse
+from urllib import request
 
-from async_http_client import HttpClientThread
-from dns_resolver import DnsResolver
-from proxy_settings import ProxySettings
-from radiovis_client import RadioVisClient
+from .async_http_client import HttpClientThread
+from .dns_resolver import DnsResolver
+from .proxy_settings import ProxySettings
+from .radiovis_client import RadioVisClient
 
 
 class ConnectionManager(object):
@@ -44,9 +44,9 @@ class ConnectionManager(object):
 
         # Get system proxy server settings (from http_proxy environment variable
         # or web browser settings).
-        proxies = urllib.getproxies()
+        proxies = urllib.request.getproxies()
         if "http" in proxies:
-            http_proxy = urlparse.urlparse(proxies['http'])
+            http_proxy = urllib.parse.urlparse(proxies['http'])
             self._proxy_settings = ProxySettings(proxy_type = socks.PROXY_TYPE_HTTP,
                                                  host = http_proxy.hostname,
                                                  port = http_proxy.port)
@@ -55,7 +55,7 @@ class ConnectionManager(object):
                      ", port " + str(http_proxy.port))
         else:
             self._proxy_settings = None
-        
+
     def shutdown(self):
         if self._radiovis_client is not None:
             self._radiovis_client.stop()
@@ -68,7 +68,7 @@ class ConnectionManager(object):
 
     def remove_listener(self, listener):
         self._listeners.remove(listener)
-        
+
     def get_cname(self, station):
         """
         Return the CNAME DNS record for the given radio station.

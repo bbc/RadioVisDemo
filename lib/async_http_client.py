@@ -1,4 +1,4 @@
-# Copyright 2009, 2013 British Broadcasting Corporation
+# Copyright 2020 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -14,10 +14,10 @@
 
 import asyncore
 import logging
-import Queue
+import queue
 import socket
 import threading
-import urlparse
+import urllib
 
 
 class AsyncHttpClient(asyncore.dispatcher_with_send):
@@ -36,7 +36,7 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
         self._proxy_settings = proxy_settings
 
         if self._proxy_settings is None:
-            url_components = urlparse.urlparse(url)
+            url_components = urllib.parse.urlparse(url)
             self._request_host = url_components.hostname
             self._request_path = url_components.path
             self._request_port = url_components.port
@@ -48,7 +48,7 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
             self._request_path = url
 
         self._header = None
-        self._data = ""
+        self._data = b""
 
         self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -63,14 +63,14 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
         try:
             self.connect(host_and_port)
             result = True
-        except socket.error, ex:
+        except socket.error as ex:
             self.log("Error %d connecting to %s port %d: %s" % (ex.errno, host_and_port[0], host_and_port[1], ex.strerror))
             result = False
 
         return result
 
     def handle_connect(self):
-        request = "GET %s HTTP/1.0\r\n" % self._request_path
+        request = "GET %s HTTP/1.1\r\n" % self._request_path
 
         if self._request_host is not None:
             request += "Host: %s" % self._request_host
@@ -80,9 +80,12 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
 
             request += "\r\n"
 
+        request += "User-Agent: RadioVISDemo\r\n"
+        request += "Accept: */*\r\n"
+        request += "Connection: close\r\n"
         request += "\r\n"
 
-        self.send(request)
+        self.send(request.encode("utf-8"))
 
     def handle_expt(self):
         # connection failed
@@ -95,23 +98,23 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
         self._client.http_received_data(self._data)
 
         self._header = None
-        self._data = ""
+        self._data = b""
 
     def handle_read(self):
         data = self.recv(2048)
 
         if not self._header:
             # check if we have a full header
-            self._data = self._data + data
+            self._data += data
 
-            i = self._data.find("\r\n\r\n")
+            i = self._data.find(b"\r\n\r\n")
 
             if i == -1:
                 return # no empty line
             else:
                 self._header = self._data[:i + 2]
                 data = self._data[i + 4:]
-                self._data = ""
+                self._data = b""
 
         if data:
             self._data += data
@@ -127,7 +130,7 @@ class HttpClientThread(threading.Thread):
     def __init__(self, client):
         threading.Thread.__init__(self)
         self._client = client
-        self._queue = Queue.Queue()
+        self._queue = queue.Queue()
         self._http_client = None
 
     def request(self, url, proxy_settings = None):
@@ -152,7 +155,7 @@ class HttpClientThread(threading.Thread):
                     else:
                         self.log("Discarding url: %s" % url)
                         self._queue.task_done()
-                except Queue.Empty:
+                except queue.Empty:
                     pass
             else:
                 # Wait for an item to appear in the queue.

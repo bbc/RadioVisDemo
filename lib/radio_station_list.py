@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -14,10 +14,10 @@
 
 import xml.etree.ElementTree
 
-from dab_radio_station import DabRadioStation
-from fm_radio_station import FmRadioStation
-from hd_radio_station import HdRadioStation
-from drm_radio_station import DrmRadioStation, AmssRadioStation
+from .dab_radio_station import DabRadioStation
+from .fm_radio_station import FmRadioStation
+from .hd_radio_station import HdRadioStation
+from .drm_radio_station import DrmRadioStation, AmssRadioStation
 
 
 class RadioStationList(object):
@@ -25,7 +25,7 @@ class RadioStationList(object):
     A list of radio stations (L{RadioStation}-derived objects).
     """
     def __init__(self, filename):
-    
+
         self._radio_stations = []
 
         tree = xml.etree.ElementTree.parse(filename)
@@ -73,11 +73,11 @@ class RadioStationList(object):
 
             radio_station = HdRadioStation(name, tx, cc)
         else:
-            raise ValueError, "Unknown broadcast protocol: %s" % broadcast_protocol
+            raise ValueError("Unknown broadcast protocol: %s" % broadcast_protocol)
 
         return radio_station
 
-    def next(self):
+    def __next__(self):
         """
         Return the next L{RadioStation} object in the list.
         """
@@ -102,10 +102,10 @@ class RadioStationList(object):
 def main():
     radio_station_list = RadioStationList("radio_stations.xml")
 
-    print "Loaded %d stations" % len(radio_station_list)
+    print("Loaded %d stations" % len(radio_station_list))
 
     for radio_station in radio_station_list:
-        print radio_station
+        print(radio_station)
 
 if __name__ == "__main__":
     main()

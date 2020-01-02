@@ -1,4 +1,4 @@
-# Copyright 2009-2017 British Broadcasting Corporation
+# Copyright 2020 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -12,13 +12,12 @@
 # implied. See the License for the specific language governing
 # permissions and limitations under the License.
 
+import io
 import logging
 import threading
 import wx
 
-import StringIO
-
-from dns_resolver import ServiceRecord
+from .dns_resolver import ServiceRecord
 
 
 class RadioStationAdapter:
@@ -356,6 +355,8 @@ class MainFrame(wx.Frame):
                                                id = wx.ID_ANY,
                                                label = "Use proxy server for Stomp connection")
 
+        self._proxy_stomp_button.Disable()
+
         connect_sizer = wx.BoxSizer(wx.HORIZONTAL)
         connect_sizer.Add(connect_button, flag = wx.ALIGN_TOP)
         connect_sizer.AddSpacer(10)
@@ -515,6 +516,8 @@ class MainFrame(wx.Frame):
         else:
             self._append_log("Unknown hostname: " + item.get_hostname())
 
+        service_to_select = None
+
         for i in range(len(self._services)):
             service = self._services[i]
             idx = self._services_listctrl.InsertItem(0, service.name)
@@ -524,8 +527,21 @@ class MainFrame(wx.Frame):
             self._services_listctrl.SetItem(idx, 4, service.target)
             self._services_listctrl.SetItemData(idx, i)
 
+            if service_to_select is None and service.name == "RadioVIS":
+                service_to_select = i
+
+        print(service_to_select)
+
         if self._services_listctrl.GetItemCount() > 0:
-            self._services_listctrl.SetItemState(0, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
+            idx = 0
+
+            if service_to_select is not None:
+                for i in range(self._services_listctrl.GetItemCount()):
+                    if self._services_listctrl.GetItemData(i) == service_to_select:
+                        idx = i
+                        break
+
+            self._services_listctrl.SetItemState(idx, wx.LIST_STATE_SELECTED, wx.LIST_STATE_SELECTED)
 
     def OnDomainComboBoxSelChanged(self, event):
         self._update_hostnames()
@@ -681,21 +697,16 @@ class MainFrame(wx.Frame):
         Create and return a wx.Bitmap object from image data, which may be
         PNG, JPG, GIF, or other format.
         """
-        stream = StringIO.StringIO(image_data)
+        stream = io.BytesIO(image_data)
 
         bitmap = None
-
-        # http://lists.wxwidgets.org/pipermail/wxpython-users/2005-December/045621.html
-        nolog = wx.LogNull()
 
         try:
             image = wx.Image(stream)
             bitmap = wx.Bitmap(image)
-        except wx.PyAssertionError, ex:
+        except wx.wxAssertionError as ex:
             # Invalid image data.
-            logging.warning(ex.message)
-
-        del nolog
+            logging.warning("Couldn't create image")
 
         return bitmap
 

@@ -1,4 +1,4 @@
-# Copyright 2009 British Broadcasting Corporation
+# Copyright 2019 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -16,8 +16,7 @@
 Test cases for DrmRadioStation and AmssRadioStation classes.
 """
 
-from drm_radio_station import DrmRadioStation
-from drm_radio_station import AmssRadioStation
+from lib.drm_radio_station import DrmRadioStation, AmssRadioStation
 
 def test_DrmRadioStation():
     p = DrmRadioStation('DRM Station', 'abcdef')
