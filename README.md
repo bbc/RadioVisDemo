@@ -24,14 +24,12 @@ installed.
 
 ### Ubuntu
 
-On Ubuntu, use your package manager to install the following packages:
-
- * python3
- * wxPython (or python-wxgtk4.0)
+On Ubuntu, install Python 3, pip, and the GTK development libraries, then
+use pip to install the dependencies:
 
 ```bash
-sudo apt-get install python3 python-wxgtk4.0
-pip3 install -r requirements-ubuntu.txt
+sudo apt-get install python3 python3-pip libgtk-3-dev
+pip3 install -r requirements.txt
 ```
 
 ### Windows
