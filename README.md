@@ -32,6 +32,13 @@ sudo apt-get install python3 python3-pip libgtk-3-dev
 pip3 install -r requirements.txt
 ```
 
+Alternatively, you may be able to install a pre-compiled version of wxPython:
+
+```bash
+sudo apt-get install python3 python3-pip python-wxgtk4.0
+pip install -r requirements-ubuntu.txt
+```
+
 ### Windows
 
 On Windows, download and install Python v3.5 or later from
@@ -48,13 +55,6 @@ On Mac, you can use pip to install the required packages:
 
 ```bash
 pip install -r requirements.txt
-```
-
-### Ubuntu 18.04 and later
-
-```bash
-sudo apt-get install python-wxgtk4.0
-pip install -r requirements-ubuntu.txt
 ```
 
 # Running RadioVisDemo
