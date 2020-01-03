@@ -530,8 +530,6 @@ class MainFrame(wx.Frame):
             if service_to_select is None and service.name == "RadioVIS":
                 service_to_select = i
 
-        print(service_to_select)
-
         if self._services_listctrl.GetItemCount() > 0:
             idx = 0
 
