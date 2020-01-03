@@ -40,7 +40,7 @@ Alternatively, you may be able to install a pre-compiled version of wxPython:
 
 ```bash
 sudo apt-get install python3 python3-pip python-wxgtk4.0
-pip install -r requirements-ubuntu.txt
+pip3 install -r requirements-ubuntu.txt
 ```
 
 ### Windows
@@ -126,6 +126,9 @@ This file contains a list of radio stations and their associated
 broadcast parameters, which are shown in the **Hostname** field. Please read
 the [RadioDNS documentation](http://radiodns.org/) for details of the
 broadcast parameters.
+
+If you'd like to add your radio station's details to this least, please
+send us a pull request.
 
 ### radiodns_services.xml
 
