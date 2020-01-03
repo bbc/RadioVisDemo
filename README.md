@@ -2,6 +2,10 @@
 
 # RadioVIS Demo Application
 
+<p align="center">
+  <a href="https://github.com/bbc/RadioVISDemo"><img src="radiovis-demo.png" alt="RadioVIS Demo screenshot"/></a>
+</p>
+
 ## Introduction
 
 RadioVisDemo is a demonstration application for RadioDNS and RadioVIS. RadioVIS
