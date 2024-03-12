@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/bbc/RadioVisDemo.svg?branch=master)](https://travis-ci.org/bbc/RadioVisDemo)
-
 # RadioVIS Demo Application
 
 <p align="center">
