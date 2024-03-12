@@ -12,6 +12,11 @@
     </service>
 
     <service>
+        <name>RadioSPI</name>
+        <record>_radiospi._tcp</record>
+    </service>
+
+    <service>
         <name>RadioTAG</name>
         <record>_radiotag._tcp</record>
     </service>
