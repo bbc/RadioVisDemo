@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Copyright 2009-2011 British Broadcasting Corporation
 #
@@ -93,8 +93,8 @@ def init_logging():
 
 
 if __name__ == '__main__':
-    thread = threading.currentThread()
-    thread.setName("gui") # Allow the GUI thread to be identified.
+    thread = threading.current_thread()
+    thread.name = "gui" # Allow the GUI thread to be identified.
 
     init_logging()
 

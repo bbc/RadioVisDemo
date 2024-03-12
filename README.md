@@ -58,7 +58,7 @@ pip install -r requirements.txt
 On Mac, you can use pip to install the required packages:
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 # Running RadioVisDemo
