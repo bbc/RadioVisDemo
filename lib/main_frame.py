@@ -462,7 +462,7 @@ class MainFrame(wx.Frame):
         Set the current row in a wx.FlexGridSizer object as growable.
         """
         rows, cols = sizer.CalcRowsCols()
-        sizer.AddGrowableRow(rows - 1)
+        sizer.AddGrowableRow(int(rows) - 1)
 
     def set_radio_stations(self, radio_stations):
         self._radio_stations = radio_stations
