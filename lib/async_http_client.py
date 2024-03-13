@@ -15,6 +15,7 @@
 import asyncore
 import logging
 import queue
+import re
 import socket
 import threading
 import urllib
@@ -95,7 +96,15 @@ class AsyncHttpClient(asyncore.dispatcher_with_send):
     def handle_close(self):
         self.close()
 
-        self._client.http_received_data(self._data)
+        match = re.match(b'^HTTP/\d+\.\d+ (\d+)', self._header)
+        if match is not None:
+            status = int(match.group(1))
+            self.log("Response: HTTP status %d" % (status))
+
+            if status >= 200 and status <= 299:
+                self._client.http_received_data(self._data)
+            else:
+                self._client.http_closed()
 
         self._header = None
         self._data = b""

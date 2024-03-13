@@ -699,11 +699,10 @@ class MainFrame(wx.Frame):
 
         bitmap = None
 
-        try:
-            image = wx.Image(stream)
+        image = wx.Image(stream)
+        if image.IsOk():
             bitmap = wx.Bitmap(image)
-        except wx.wxAssertionError as ex:
-            # Invalid image data.
+        else:
             logging.warning("Couldn't create image")
 
         return bitmap
