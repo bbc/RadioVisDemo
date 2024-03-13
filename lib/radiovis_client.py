@@ -1,4 +1,4 @@
-# Copyright 2020 British Broadcasting Corporation
+# Copyright 2024 British Broadcasting Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -64,6 +64,7 @@ class RadioVisClient(stomp.ConnectionListener):
 
     def stop(self):
         self._connection.disconnect()
+        self._connection.transport.stop()
 
     def on_connected(self, headers, body):
         """
