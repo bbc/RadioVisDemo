@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/bbc/RadioVisDemo/actions/workflows/python-package.yml/badge.svg?branch=master)](https://github.com/bbc/RadioVisDemo/actions)
+
 # RadioVIS Demo Application
 
 <p align="center">
