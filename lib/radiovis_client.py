@@ -66,12 +66,12 @@ class RadioVisClient(stomp.ConnectionListener):
         self._connection.disconnect()
         self._connection.transport.stop()
 
-    def on_connected(self, headers, body):
+    def on_connected(self, frame):
         """
         Once connected, subscribe to the message queues for TEXT and SHOW
         messages.
         """
-        self.notify("CONNECTED", headers, body)
+        self.notify("CONNECTED", frame)
 
         if self._text_topic is not None:
             self._connection.subscribe(destination = self._text_topic, ack = 'auto')
@@ -82,14 +82,14 @@ class RadioVisClient(stomp.ConnectionListener):
     def on_disconnected(self):
         self.notify("lost connection")
 
-    def on_message(self, headers, body):
+    def on_message(self, frame):
         """
         Handler for received MESSAGE frames. Parse the message body
         to extract TEXT and SHOW RadioVIS messages.
         """
-        self.notify("MESSAGE", headers, body)
+        self.notify("MESSAGE", frame)
 
-        lines = body.split('\n')
+        lines = frame.body.split('\n')
 
         for line in lines:
             # Remove leading and trailing whitespace.
@@ -109,14 +109,14 @@ class RadioVisClient(stomp.ConnectionListener):
                 if match:
                     url = match.group(1)
 
-                    if 'link' in headers:
-                        link = headers['link']
+                    if 'link' in frame.headers:
+                        link = frame.headers['link']
                     else:
                         link = None
 
-                    if 'trigger-time' in headers:
+                    if 'trigger-time' in frame.headers:
                         # TODO: Parse date_time and construct a datetime object.
-                        date_time = headers['trigger-time']
+                        date_time = frame.headers['trigger-time']
                     else:
                         date_time = None
 
@@ -124,14 +124,14 @@ class RadioVisClient(stomp.ConnectionListener):
                 else:
                     pass
 
-    def on_receipt(self, headers, body):
-        self.notify("RECEIPT", headers, body)
+    def on_receipt(self, frame):
+        self.notify("RECEIPT", frame)
 
-    def on_error(self, headers, body):
+    def on_error(self, frame):
         """
         Handler for received ERROR frames.
         """
-        self.notify("ERROR", headers, body)
+        self.notify("ERROR", frame)
 
     def disconnect(self, args):
         try:
@@ -139,16 +139,17 @@ class RadioVisClient(stomp.ConnectionListener):
         except stomp.NotConnectedException:
             pass # ignore if no longer connected
 
-    def notify(self, message, headers = None, body = ''):
+    def notify(self, message, frame = None):
         for listener in self._listeners:
             listener.stomp_message(message)
 
-            if headers is not None:
-                for header in headers:
-                    listener.stomp_message("%s: %s" % (header, headers[header]))
+            if frame is not None:
+                if frame.headers is not None:
+                    for header in frame.headers:
+                        listener.stomp_message("%s: %s" % (header, frame.headers[header]))
 
-            if len(body) > 0:
-                listener.stomp_message(body)
+                if len(frame.body) > 0:
+                    listener.stomp_message(frame.body)
 
     def notify_text(self, text):
         """
