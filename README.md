@@ -184,7 +184,7 @@ This software was written by [Chris Needham](https://github.com/chrisn) - chris.
 
 ## Contact and Legal Information
 
-Copyright 2009-2020 British Broadcasting Corporation
+Copyright 2009-2024 British Broadcasting Corporation
 
 The RadioVIS Demo Application is free software; you can redistribute it and/or
 modify it under the terms of the Apache License, Version 2.0.
